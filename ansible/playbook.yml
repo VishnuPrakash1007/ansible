@@ -1,13 +1,17 @@
-- name: Deploy to Tomcat 
-hosts: web 
-become: yes 
-tasks: 
-- name: Copy WAR file to Tomcat 
-copy: 
-src: "/var/snap/jenkins/5022/workspace/MyMavenAnsibleApp01
-/target/MyMavenAnsibleApp01.war" 
-dest: "/opt/tomcat/webapps/MavenAnsibleWebApp1.war" 
-remote_src: no - name: Restart Tomcat 
-systemd: 
-name: tomcat 
-state: restarted
+---
+- name: Deploy to Tomcat
+  hosts: web
+  become: yes
+
+  tasks:
+
+    - name: Copy WAR file to Tomcat
+      copy:
+        src: "/var/snap/jenkins/5022/workspace/ansible/target/MavenAnsibleWebApp.war"
+        dest: "/opt/tomcat/webapps/MavenAnsibleWebApp.war"
+        remote_src: no
+
+    - name: Restart Tomcat
+      systemd:
+        name: tomcat
+        state: restarted
